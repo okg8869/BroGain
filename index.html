@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BroGain</title>
+        <meta charset="utf-8">
+        <meta name="description" content="A web application to track and graph your workout process and overall gains.">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="style.css">
+        <script src="scripts.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/data.js"></script>
+    </head>
+    <body>
+        <h1 class='header'>Welcome to BroGain!</h1>
+        <h3 class='subheader'>Serving all your Bro tracking n graphing needs since 2017!</h3>
+
+        <div>
+            <p>Ok here we go, below this is a form, fill it out to provide me with some data to graph for you! Here we will track your progress through the various workouts you do. Once you have enough data, will show you how far you've come with graphs and nerd stuff!</p>
+
+
+        </div>
+        <div id='topmenu' style='max-width: 500px; margin: 0 auto; box-shadow: 5px 5px 3px #888888;'>
+            <table style='width:100%; margin-top:10px;'>
+                <tr>
+                    <th><button id='chest'>Chest</button></th>
+                    <th><button id='back'>Back</button></th>
+                    <th><button id='arms'>Arms</button></th>
+                    <th><button id='legs'>Legs</button></th>
+                    <th><button id='shoulders'>Shoulders</button></th>
+                    <th><button id='core'>Core</button></th>
+                </tr>
+            </table>
+        </div>
+        <div class='column'>
+            <legend>Your Workout Update</legend>
+            <form class='workout-form active' id="chestform">
+                <label>Chest</label>
+                <p>
+                    <label>Dumbell Press</label>
+                    <input name="workout1" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput1">Graph it!</button>
+                </p>
+                <p>
+                    <label>Decline Press</label>
+                    <input name="workout2" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput2">Graph it!</button>
+                </p>
+                <p>
+                    <label>Incline Press</label>
+                    <input name="workout3" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput3">Graph it!</button>
+                </p>
+                <p>
+                    <label>Dumbell Fly</label>
+                    <input name="workout4" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput4">Graph it!</button>
+                </p>
+                <p>
+                    <label>Cable Uppercut Fly</label>
+                    <input name="workout5" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput5">Graph it!</button>
+                </p>
+                <p>
+                    <label>Pushups</label>
+                    <input name="workout6" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput6">Graph it!</button>
+                </p>
+                    <p><button class="submit">Submit</button></p>
+            </form>
+            <form class='workout-form' id="backform">
+                <label>Back</label>
+                <p>
+                    <label>Deadlift</label>
+                    <input name="workout1" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput1">Graph it!</button>
+                </p>
+                <p>
+                    <label>Single Arm Dumbell Row</label>
+                    <input name="workout2" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput2">Graph it!</button>
+                </p>
+                <p>
+                    <label>Cable Row</label>
+                    <input name="workout3" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput3">Graph it!</button>
+                </p>
+                <p>
+                    <label>Wide Grip Pull Down</label>
+                    <input name="workout4" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput4">Graph it!</button>
+                </p>
+                <p>
+                    <label>Cable Row</label>
+                    <input name="workout5" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput5">Graph it!</button>
+                </p>
+                <p>
+                    <label>Wide Grip Pullup</label>
+                    <input name="workout6" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput6">Graph it!</button>
+                </p>
+                    <p><button class="submit">Submit</button></p>
+            </form>
+            <form class='workout-form' id="armsform">
+                <label>Arms</label>
+                <p>
+                    <label>Dumbell Curls</label>
+                    <input name="workout1" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput1">Graph it!</button>
+                </p>
+                <p>
+                    <label>Hammer Curls</label>
+                    <input name="workout2" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput2">Graph it!</button>
+                </p>
+                <p>
+                    <label>Preacher Curls</label>
+                    <input name="workout3" type="text" class="workoutinput" placeholder="weight/reps"/><button class='graphButton' data-group="workoutInput3">Graph it!</button>
+                </p>
+                <p>
+                    <label>Dumbell Tricep Curls</label>
+                    <input name="workout4" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput4">Graph it!</button>
+                </p>
+                <p>
+                    <label>Lying Tricep Press</label>
+                    <input name="workout5" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput5">Graph it!</button>
+                </p>
+                <p>
+                    <label>Palm Up Barbell Wrist Curl</label>
+                    <input name="workout6" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput6">Graph it!</button>
+                </p>
+                    <p><button class="submit">Submit</button></p>
+            </form>
+            <form class='workout-form' id="legsform">
+                <label>Legs</label>
+                <p>
+                    <label>Barbell Squat</label>
+                    <input name="workout1" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput1">Graph it!</button>
+                </p>
+                <p>
+                    <label>Dumbell Lunges</label>
+                    <input name="workout2" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput2">Graph it!</button>
+                </p>
+                <p>
+                    <label>Barbell Deadlift</label>
+                    <input name="workout3" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput3">Graph it!</button>
+                </p>
+                <p>
+                    <label>Dumbell Step Ups/Jump Ups</label>
+                    <input name="workout4" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput4">Graph it!</button>
+                </p>
+                <p>
+                    <label>Dumbell Calf Extensions</label>
+                    <input name="workout5" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput5">Graph it!</button>
+                </p>
+                <p>
+                    <label>Leg Press</label>
+                    <input name="workout6" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput6">Graph it!</button>
+                </p>
+                    <p><button class="submit">Submit</button></p>
+            </form>
+            <form class='workout-form' id="shouldersform">
+                <label>Shoulders</label>
+                <p>
+                    <label>Dumbell Shoulder Press</label>
+                    <input name="workout1" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput1">Graph it!</button>
+                </p>
+                <p>
+                    <label>Bent Rear Delt Raise</label>
+                    <input name="workout2" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput2">Graph it!</button>
+                </p>
+                <p>
+                    <label>Side Lateral Raise</label>
+                    <input name="workout3" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput3">Graph it!</button>
+                </p>
+                <p>
+                    <label>Seated barbell Military Press</label>
+                    <input name="workout4" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput4">Graph it!</button>
+                </p>
+                <p>
+                    <label>Upright Cable Row</label>
+                    <input name="workout5" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput5">Graph it!</button>
+                </p>
+                <p>
+                    <label>Full Movment (Out, Center, Up, Down)</label>
+                    <input name="workout6" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput6">Graph it!</button>
+                </p>
+                    <p><button class="submit">Submit</button></p>
+            </form>
+            <form class='workout-form' id="coreform">
+                <label>Core/Cardio</label>
+                <p>
+                    <label>JumpRope (in minutes per round)</label>
+                    <input name="workout1" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput1">Graph it!</button>
+                </p>
+                <p>
+                    <label>Plank (in minutes per session)</label>
+                    <input name="workout2" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput2">Graph it!</button>
+                </p>
+                <p>
+                    <label>Barbell/Plat Side Bend</label>
+                    <input name="workout3" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput3">Graph it!</button>
+                </p>
+                <p>
+                    <label>Decline Situps (# per round)</label>
+                    <input name="workout4" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput4">Graph it!</button>
+                </p>
+                <p>
+                    <label>Lying Leg Raise (# per round)</label>
+                    <input name="workout5" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput5">Graph it!</button>
+                </p>
+                <p>
+                    <label>Russion Twist (Weight per 10/15)</label>
+                    <input name="workout6" type="text" class="workoutinput" placeholder="weight/reps"/>
+                    <button class='graphButton' data-group="workoutInput6">Graph it!</button>
+                </p>
+                    <p><button class="submit" style="display:inline-block;">Submit</button></p>
+            </form>
+        </div><!-- 
+         --><div class='column'>
+            <h2>Let's take a look at that progress</h2>
+            <div id='container' style="width:100%; height:400px;"></div>
+        </div>
+    </body>
+</html>

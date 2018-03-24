@@ -1,0 +1,70 @@
+body {
+    margin:50px 0px; 
+    padding:0px;
+    text-align:center;
+    align: center;
+}
+
+label,input {
+	 display: block;
+	 width: 150px;
+	 float: left;
+	 margin-bottom: 10px;
+}
+
+legend {
+	  display: block;
+	  width: 100%;
+	  padding: .3em 0;
+	  margin-bottom: .3em;
+	  color: #333;
+	  border-bottom: 1px solid #e5e5e5;
+	  border: 0;
+}
+
+form {
+    display: table-cell;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    float:left;
+}
+
+.column {
+  vertical-align: top;
+  width:50%;
+  display:inline-block;
+  box-sizing: border-box;
+  padding:20px;
+}
+
+.workout-form {
+  display: none;
+}
+
+.workout-form.active {
+  display: block;
+}
+
+.submit {
+  padding: 10px 20px;
+  color: white;
+  border:none;
+  border-radius: 4px;
+  background: #00aee6;
+  font-size: 1em;
+}
+
+th {
+  margin-left: 1px;
+  margin-right: 1px;
+}
+
+.graph-submit {
+  margin-bottom: 10px;
+}
+
+form  { display: table;      }
+p     { display: table-row;  }
+label { display: table-cell; }
+input { display: table-cell; }
